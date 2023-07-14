@@ -7,6 +7,7 @@ const router = express.Router()
 router.post('/', auth, multer, stuffCtrl.createBook)
 router.get('/', stuffCtrl.getAllBooks)
 router.get('/:id', stuffCtrl.getOneBook)
+router.put('/:id', auth, multer, stuffCtrl.modifyBook)
 router.delete('/:id', auth, stuffCtrl.deleteOneBook)
 
 // router.get((req, res, next) => {
