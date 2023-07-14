@@ -1,9 +1,10 @@
 const express = require('express')
 const stuffCtrl = require('../controllers/stuff')
 const auth = require('../middleware/auth')
+const multer = require('../middleware/multer-config')
 const router = express.Router()
 
-router.post('/', auth, stuffCtrl.createBook)
+router.post('/', auth, multer, stuffCtrl.createBook)
 
 
 // router.get((req, res, next) => {
