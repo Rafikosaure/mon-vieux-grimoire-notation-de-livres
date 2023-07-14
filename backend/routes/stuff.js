@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/', auth, multer, stuffCtrl.createBook)
 router.get('/', stuffCtrl.getAllBooks)
 router.get('/:id', stuffCtrl.getOneBook)
-router.delete('/:id', stuffCtrl.deleteOneBook)
+router.delete('/:id', auth, stuffCtrl.deleteOneBook)
 
 // router.get((req, res, next) => {
 //     console.log('Requête reçue !')
