@@ -5,7 +5,7 @@ const multer = require('../middleware/multer-config')
 const router = express.Router()
 
 router.post('/', auth, multer, stuffCtrl.createBook)
-
+router.get('/', stuffCtrl.getAllBooks)
 
 // router.get((req, res, next) => {
 //     console.log('Requête reçue !')
