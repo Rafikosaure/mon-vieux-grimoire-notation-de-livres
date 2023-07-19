@@ -6,6 +6,7 @@ const router = express.Router()
 
 router.post('/', auth, multer, stuffCtrl.createBook)
 router.get('/', stuffCtrl.getAllBooks)
+router.get('/bestrating', stuffCtrl.getBestRatedBooks)
 router.get('/:id', stuffCtrl.getOneBook)
 router.put('/:id', auth, multer, stuffCtrl.modifyBook)
 router.post('/:id/rating', auth, stuffCtrl.giveARating)

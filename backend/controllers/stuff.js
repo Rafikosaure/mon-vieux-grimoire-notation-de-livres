@@ -1,7 +1,8 @@
-const { error } = require('console')
+const { type } = require('os')
 const book = require('../models/book')
 const Book = require('../models/book')
 const fs = require('fs')
+const { error } = require('console')
 
 exports.createBook = (req, res, next) => {
     const bookObject = JSON.parse(req.body.book)
@@ -37,6 +38,21 @@ exports.getOneBook = (req, res, next) => {
     Book.findOne({ _id: req.params.id })
         .then((book) => res.status(200).json(book))
         .catch((error) => res.status(404).json({ error }))
+}
+
+exports.getBestRatedBooks = (req, res, next) => {
+    let booksArray = []
+    Book.find()
+        .then(books => {
+            for (let book of books) {
+                booksArray.push(book)
+            }
+            const bestRatedBooks = booksArray.sort((x, y) => y.averageRating - x.averageRating)
+            const threeBestRatedBooks = bestRatedBooks.slice(0, 3)
+            console.log(threeBestRatedBooks)
+            res.status(200).json(threeBestRatedBooks)
+        })
+        .catch((error) => res.status(400).json({ error }))
 }
 
 exports.modifyBook = (req, res, next) => {
