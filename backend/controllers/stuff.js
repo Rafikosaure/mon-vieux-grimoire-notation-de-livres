@@ -7,7 +7,7 @@ exports.createBook = (req, res, next) => {
     delete bookObject._id
     delete bookObject._userId
     
-    // Outil Sharp : traitement d'image
+    // Outil Sharp : traitement de l'image chargée
     const { buffer, originalname } = req.file
     const timestamp = Date.now()
     const name = originalname.split(' ').join('_')
@@ -18,7 +18,7 @@ exports.createBook = (req, res, next) => {
         .webp({ lossless: true })
         .toFile(path)
     
-    // Création du livre (avec l'image)
+    // Création du livre (incluant l'image traitée)
     const book = new Book({
         ...bookObject,
         userId: req.auth.userId,
@@ -48,14 +48,20 @@ exports.getOneBook = (req, res, next) => {
 }
 
 exports.getBestRatedBooks = (req, res, next) => {
+    
+    // Constitution d'un tableau contenant tous les livres
     let booksArray = []
     Book.find()
         .then(books => {
             for (let book of books) {
                 booksArray.push(book)
             }
+
+            // Retenue des 3 livres les mieux notés du tableau
             const bestRatedBooks = booksArray.sort((x, y) => y.averageRating - x.averageRating)
             const threeBestRatedBooks = bestRatedBooks.slice(0, 3)
+
+            // Envoi du nouveau tableau des 3 livres les mieux notés comme réponse à la requête
             res.status(200).json(threeBestRatedBooks)
         })
         .catch((error) => res.status(400).json({ error }))

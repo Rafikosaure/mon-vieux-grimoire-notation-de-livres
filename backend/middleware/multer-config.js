@@ -1,6 +1,5 @@
 const multer = require('multer')
 
-
 // *************** Méthode 1: Enregistrement dans diskStorage() ***************
 
 // const MIME_TYPES = {
