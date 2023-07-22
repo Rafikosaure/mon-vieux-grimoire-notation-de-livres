@@ -1,24 +1,31 @@
-const { type } = require('os')
-const book = require('../models/book')
+const sharp = require('sharp')
 const Book = require('../models/book')
 const fs = require('fs')
-const { error } = require('console')
 
 exports.createBook = (req, res, next) => {
     const bookObject = JSON.parse(req.body.book)
-    // console.log(bookObject)
     delete bookObject._id
     delete bookObject._userId
-    // Ici: code sharp !
+    
+    // Outil Sharp : traitement d'image
+    const { buffer, originalname } = req.file
+    const timestamp = Date.now()
+    const name = originalname.split(' ').join('_')
+    const ref = `${name}-${timestamp}.webp`
+    const path = `./images/${ref}`
+    sharp(buffer)
+        .resize(450)
+        .webp({ lossless: true })
+        .toFile(path)
+    
+    // Création du livre (avec l'image)
     const book = new Book({
         ...bookObject,
         userId: req.auth.userId,
-        // imageUrl: ref(sharp)
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${
-            req.file.filename
-        }`,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${ref}`
     })
-    // console.log(book)
+    
+    // Enregistrememt du livre
     book.save()
         .then(() => {
             res.status(201).json({ message: 'Livre enregistré !' })
@@ -49,7 +56,6 @@ exports.getBestRatedBooks = (req, res, next) => {
             }
             const bestRatedBooks = booksArray.sort((x, y) => y.averageRating - x.averageRating)
             const threeBestRatedBooks = bestRatedBooks.slice(0, 3)
-            console.log(threeBestRatedBooks)
             res.status(200).json(threeBestRatedBooks)
         })
         .catch((error) => res.status(400).json({ error }))
@@ -114,7 +120,7 @@ exports.giveARating = (req, res, next) => {
 
             // Enregistrement des changements
             book.save()
-            .then(() => res.status(200).json({ book }))
+            .then(() => res.status(200).json(book))
             .catch((error) => res.status(401).json({ error }))
         }
     })
