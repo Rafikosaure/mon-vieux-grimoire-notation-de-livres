@@ -19,9 +19,17 @@ const multer = require('multer')
 //     }
 // })
 
-
 // *************** Méthode 2: Enregistrement dans memoryStorage() ***************
 
 const storage = multer.memoryStorage()
 
-module.exports = multer({ storage: storage }).single('image')
+const multerFilter = (req, file, callback) => {
+    console.log(file.mimetype)
+    if (file.mimetype.split('/')[1] !== 'jpg' && file.mimetype.split('/')[1] !== 'jpeg' && file.mimetype.split('/')[1] !== 'png') {
+        callback(new Error('Fichier non-conforme !'), false)
+    } else {
+        callback(null, true)
+    }
+}
+
+module.exports = multer({ storage: storage, fileFilter: multerFilter }).single('image')
