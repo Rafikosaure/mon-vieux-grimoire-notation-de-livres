@@ -5,7 +5,6 @@ const storage = multer.memoryStorage()
 
 // Fonction de filtrage du fichier chargé selon son extension
 const multerFilter = (req, file, callback) => {
-    console.log(file.mimetype)
     if (
         file.mimetype.split('/')[1] !== 'jpg' &&
         file.mimetype.split('/')[1] !== 'jpeg' &&
