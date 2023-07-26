@@ -4,6 +4,7 @@ const auth = require('../middleware/auth')
 const multer = require('../middleware/multer-config')
 const router = express.Router()
 
+/** Routes de l'API (hors signup & login) */
 router.get('/bestrating', stuffCtrl.getBestRatedBooks)
 router.put('/:id', auth, multer, stuffCtrl.modifyBook)
 router.post('/', auth, multer, stuffCtrl.createBook)

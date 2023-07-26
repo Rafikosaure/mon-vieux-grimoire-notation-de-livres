@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 require('dotenv').config()
 
+/** Enregistre un nouvel utilisateur dans la base de données */
 exports.signup = (req, res, next) => {
     bcrypt
         .hash(req.body.password, process.env.NB_HASH)
@@ -20,6 +21,7 @@ exports.signup = (req, res, next) => {
         .catch((error) => res.status(500).json({ error }))
 }
 
+/** Connecte un utilisateur à son compte si ses identifiants sont corrects */
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then((user) => {
@@ -43,7 +45,7 @@ exports.login = (req, res, next) => {
                                     { userId: user._id },
                                     process.env.RANDOM_TOKEN_SECRET,
                                     { expiresIn: '24h' }
-                                )
+                                ),
                             })
                         }
                     })

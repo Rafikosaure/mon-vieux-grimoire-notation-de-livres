@@ -1,9 +1,9 @@
 const multer = require('multer')
 
-// Enregistrement de l'image chargée dans la mémoire
+/** Enregistrement en mémoire de l'image chargée */
 const storage = multer.memoryStorage()
 
-// Fonction de filtrage du fichier chargé selon son extension
+/** Filtrage du fichier chargé par son extension */
 const multerFilter = (req, file, callback) => {
     if (
         file.mimetype.split('/')[1] !== 'jpg' &&
