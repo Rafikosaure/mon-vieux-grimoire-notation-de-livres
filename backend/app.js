@@ -37,16 +37,19 @@ app.use(
     rateLimit({
         windowMs: 60 * 1000,
         max: 100,
-        message: 'Vous avez atteint la limite de 100 requêtes par minutes !',
+        message: 'Vous avez atteint la limite de 100 requêtes par minute !',
         headers: true,
     })
 )
 
+/** Configuration de Helmet */
 app.use(
     helmet({
-        crossOriginResourcePolicy: { policy: 'cross-origin' },
+        crossOriginResourcePolicy: { policy: 'cross-origin' }
     })
 )
+
+/** Ici : les routeurs de l'application */
 app.use('/api/auth', userRoutes)
 app.use('/api/books', stuffRoutes)
 app.use('/images', express.static(path.join(__dirname, 'images')))
