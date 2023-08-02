@@ -6,7 +6,7 @@ require('dotenv').config()
 /** Enregistre un nouvel utilisateur dans la base de données */
 exports.signup = (req, res, next) => {
     bcrypt
-        .hash(req.body.password, process.env.NB_HASH)
+        .hash(req.body.password, parseInt(process.env.NB_HASH, 10))
         .then((hash) => {
             const user = new User({
                 email: req.body.email,
