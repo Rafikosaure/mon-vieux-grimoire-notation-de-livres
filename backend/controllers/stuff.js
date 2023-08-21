@@ -1,5 +1,5 @@
 const sharp = require('sharp')
-const Book = require('../models/book')
+const Book = require('../models/Book')
 const fs = require('fs')
 
 /** Crée un nouveau livre dans la base de données */

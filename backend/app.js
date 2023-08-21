@@ -12,7 +12,7 @@ require('dotenv').config()
 /** Connexion à la base de données MongoDB */
 mongoose
     .connect(
-        `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster-monvieuxgrimoir.betoteu.mongodb.net/?retryWrites=true&w=majority`,
+        `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster-mon-vieux-grimo.7pht7gu.mongodb.net/?retryWrites=true&w=majority`, // après le : et avant le @
         { useNewUrlParser: true, useUnifiedTopology: true }
     )
     .then(() => console.log('Connexion à MongoDB réussie !'))

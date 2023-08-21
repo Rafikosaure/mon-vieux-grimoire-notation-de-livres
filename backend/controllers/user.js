@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const User = require('../models/user')
+const User = require('../models/User')
 require('dotenv').config()
 
 /** Enregistre un nouvel utilisateur dans la base de données */
